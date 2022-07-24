@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
 
-function App() {
+const App: React.FC = () => {
+  // NOTE: handle error via http
+
   return (
     <div className='App'>
-      <h1>Welcome to React Router!</h1>
-      <div>
-        <Link to='stock'>go to stock</Link>
-      </div>
+      <Routes>
+        <Route path='/'></Route>
+      </Routes>
     </div>
   )
 }
