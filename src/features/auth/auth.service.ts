@@ -1,26 +1,17 @@
 import httpClient from '@/httpClient'
+import { GetSession, SignIn } from '@/types/auth.type'
 
-export type signUpProps = {
-  email: string
-  firstName: string
-  lastName: string
-  companyName: string
-  phoneNumber: string
+type signInProps = {
+  username: string
   password: string
 }
 
-// SignUp
-// export const signUpApi = async (credential: signUpProps): Promise<SignUpResult> => {
-//   const { data: response } = await httpClient.post<SignUpResult>(`/auth/signup`, credential)
-//   return response
-// }
+export const signIn = async (credential: signInProps): Promise<SignIn> => {
+  const { data: response } = await httpClient.post<SignIn>(`/auth/signin`, credential)
+  return response
+}
 
-// export type signInProps = {
-//   email: string
-//   password: string
-// }
-
-// export const signInApi = async (credential: signInProps): Promise<SignInResult> => {
-//   const { data: response } = await httpClient.post<SignInResult>(`/auth/signin`, credential)
-//   return response
-// }
+export const getSession = async (): Promise<GetSession> => {
+  const response = await httpClient.get<GetSession>(`/auth/session`)
+  return response.data
+}

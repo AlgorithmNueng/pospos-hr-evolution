@@ -1,49 +1,57 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Grid from '@mui/material/Grid'
+import FormHelperText from '@mui/material/FormHelperText'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { SxProps } from '@mui/material'
 import { useForm } from 'react-hook-form'
+
+import { useAppDispatch } from '@/store'
+import { signIn } from '@/features/auth/auth.slice'
 
 export interface FormInputs {
   username: string
   password: string
 }
 
-const classes: any = {
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20
-  },
-  submitBtn: { marginTop: 4 },
-  canelBtn: { marginTop: 2 }
-}
-
 const SignIn: React.FC = () => {
+  const dispatch = useAppDispatch()
+
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors }
   } = useForm<FormInputs>()
 
+  useEffect(() => {
+    setValue('username', 'mynung.comsci@gmail.com')
+    setValue('password', 'n0u4e1n1g')
+  }, [setValue])
+
   const onSubmit = (data: FormInputs) => {
-    console.log(data)
+    dispatch(signIn(data)).then((item) => {
+      // FIXME: navigate to
+    })
   }
 
   return (
-    <Box sx={classes.root}>
-      <Card sx={{ maxWidth: 345 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}
+    >
+      <Card sx={{ width: 345 }}>
         <CardContent>
-          <Typography gutterBottom variant='h5' component='h2'>
+          <Typography gutterBottom variant='h5' component='h2' style={{ textAlign: 'center' }}>
             SignIn
           </Typography>
-          <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
               {...register('username', { required: true })}
               variant='outlined'
@@ -54,7 +62,7 @@ const SignIn: React.FC = () => {
               autoComplete='email'
               autoFocus
             />
-            {/* {errors?.username && <Form.Text className='text-danger'>{errors.username.message}</Form.Text>} */}
+            {errors?.username && <FormHelperText style={{ color: 'red' }}>please input username!</FormHelperText>}
             <TextField
               {...register('password', { required: true })}
               variant='outlined'
@@ -64,8 +72,8 @@ const SignIn: React.FC = () => {
               type='password'
               autoComplete='current-password'
             />
-            {/* {errors?.username && <Form.Text className='text-danger'>{errors.username.message}</Form.Text>} */}
-            <Button sx={classes.submitBtn} type='submit' fullWidth variant='contained' color='primary'>
+            {errors?.username && <FormHelperText style={{ color: 'red' }}>please input password!</FormHelperText>}
+            <Button sx={{ marginTop: 4 }} type='submit' fullWidth variant='contained' color='primary'>
               SignIn
             </Button>
           </form>

@@ -1,21 +1,21 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { ThemeProvider } from '@mui/material/styles'
 
-import './App.css'
+import { appTheme } from '@/appTheme'
 import AuthRoutes from './features/auth/AuthRoutes'
 
 const App: React.FC = () => {
   // NOTE: handle error via http
 
   return (
-    <div className='App'>
-      {/* FIXME: add UI for loading lazy */}
-      <React.Suspense fallback={<div>Loading..</div>}>
+    <React.Suspense fallback={<div>Loading..</div>}>
+      <ThemeProvider theme={appTheme}>
         <Routes>
           <Route path='auth/*' element={<AuthRoutes />} />
         </Routes>
-      </React.Suspense>
-    </div>
+      </ThemeProvider>
+    </React.Suspense>
   )
 }
 
