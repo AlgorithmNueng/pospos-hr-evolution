@@ -1,3 +1,15 @@
+# Config i18n
+
+## Convension
+
+        # normal
+        key: value
+        # singular/plural
+        key_one: singular
+        key_other: plural
+
+https://www.i18next.com/translation-function/plurals
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
