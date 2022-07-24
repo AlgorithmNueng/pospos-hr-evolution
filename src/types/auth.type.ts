@@ -11,9 +11,5 @@ export interface SignIn {
 
 export interface GetSession {
   sucess: number
-  data: {
-    isAuthenticated: boolean
-    user?: UserData
-    access_token?: string
-  }
+  data?: UserData
 }

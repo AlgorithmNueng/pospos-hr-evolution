@@ -12,6 +12,6 @@ export const signIn = async (credential: signInProps): Promise<SignIn> => {
 }
 
 export const getSession = async (): Promise<GetSession> => {
-  const response = await httpClient.get<GetSession>(`/auth/session`)
+  const response = await httpClient.get<GetSession>(`/admin-accounts/profile`)
   return response.data
 }

@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as authService from './auth.service'
 import { UserData } from '@/types/user.type'
 import { ACCESS_TOKEN_KEY } from '@/utils/constant'
+import { RootState } from '@/store'
 
 const sliceName = 'auth'
 
@@ -19,21 +20,20 @@ export const signIn = createAsyncThunk(`${sliceName}/signin`, async (credential:
 
 export const getSession = createAsyncThunk(`${sliceName}/fetchSession`, async () => {
   const response = await authService.getSession()
+  console.log(response.data)
   return response.data
 })
 
 interface AuthState {
   user?: UserData
-  accessToken: string
   isAuthenticated: boolean
-  isAuthenticating: boolean
+  checkAuthentication: boolean
 }
 
 const initialState: AuthState = {
   user: undefined,
-  accessToken: '',
   isAuthenticated: false,
-  isAuthenticating: true
+  checkAuthentication: false
 }
 
 const authSlice = createSlice({
@@ -41,29 +41,27 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     signOut: (state) => {
-      state.accessToken = ''
       state.user = undefined
       state.isAuthenticated = false
-      state.isAuthenticating = false
+      state.checkAuthentication = false
     }
   },
   extraReducers: (builder) => {
     builder.addCase(signIn.fulfilled, (state, action) => {
-      state.accessToken = action.payload.access_token
       state.user = action.payload.user
       state.isAuthenticated = true
-      state.isAuthenticating = false
+      state.checkAuthentication = true
     })
     builder.addCase(getSession.fulfilled, (state, action) => {
-      state.isAuthenticated = action.payload.isAuthenticated
-      state.isAuthenticating = false
-      if (action.payload.isAuthenticated && action.payload.access_token) {
-        state.accessToken = action.payload.access_token
-        state.user = action.payload.user
-      }
+      state.isAuthenticated = !!action.payload
+      state.checkAuthentication = true
+      state.user = action.payload
     })
   }
 })
 
 export const { signOut } = authSlice.actions
 export default authSlice.reducer
+
+// common get state
+export const isAuthenticatedSelector = (store: RootState) => store.auth.isAuthenticated
