@@ -25,15 +25,9 @@ const SignIn: React.FC = () => {
 
   const {
     register,
-    setValue,
     handleSubmit,
     formState: { errors }
   } = useForm<FormInputs>()
-
-  useEffect(() => {
-    setValue('username', 'mynung.comsci@gmail.com')
-    setValue('password', 'n0u4e1n1g')
-  }, [setValue])
 
   const onSubmit = (data: FormInputs) => {
     dispatch(signIn(data)).then((item) => {
