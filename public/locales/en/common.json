@@ -1,1 +1,6 @@
-{}
+{
+  "global": {
+    "login": "Login",
+    "logout": "Logout"
+  }
+}

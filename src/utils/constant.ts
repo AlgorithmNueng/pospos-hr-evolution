@@ -1,2 +1,3 @@
 export const ACCESS_TOKEN_KEY = 'access_token'
-export const DEFAULT_LOCALE = 'th'
+export const USER_LANGUAGE_KEY = 'user_language'
+export const DEFAULT_LANGUAGE = 'th'

@@ -7,7 +7,6 @@ import { appTheme } from '@/appTheme'
 import PrivateRoute from './components/PrivateRoute'
 import AuthRoute from './components/AuthRoute'
 import { RootState, useAppDispatch } from './store'
-
 import AuthRoutes from './features/auth/AuthRoutes'
 import ArticleRoutes from './features/article/ArticleRoutes'
 import { getSession } from './features/auth/auth.slice'

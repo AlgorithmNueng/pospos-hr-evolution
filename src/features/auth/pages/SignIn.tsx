@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/store'
 import { signIn } from '@/features/auth/auth.slice'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 export interface FormInputs {
   username: string
@@ -17,6 +19,8 @@ export interface FormInputs {
 }
 
 const SignIn: React.FC = () => {
+  const navigate = useNavigate()
+  const { t } = useTranslation(['auth', 'common'])
   const dispatch = useAppDispatch()
 
   const {
@@ -33,7 +37,7 @@ const SignIn: React.FC = () => {
 
   const onSubmit = (data: FormInputs) => {
     dispatch(signIn(data)).then((item) => {
-      // FIXME: navigate to
+      navigate('/article')
     })
   }
 
@@ -49,7 +53,7 @@ const SignIn: React.FC = () => {
       <Card sx={{ width: 345 }}>
         <CardContent>
           <Typography gutterBottom variant='h5' component='h2' style={{ textAlign: 'center' }}>
-            SignIn
+            {t('signIn.title')}
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField

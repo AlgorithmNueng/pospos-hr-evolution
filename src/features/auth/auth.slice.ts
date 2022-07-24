@@ -57,6 +57,11 @@ const authSlice = createSlice({
       state.checkAuthentication = true
       state.user = action.payload
     })
+    builder.addCase(getSession.rejected, (state, action) => {
+      state.isAuthenticated = false
+      state.checkAuthentication = true
+      state.user = undefined
+    })
   }
 })
 
