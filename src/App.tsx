@@ -11,6 +11,7 @@ import AuthRoutes from './features/auth/AuthRoutes'
 import ArticleRoutes from './features/article/ArticleRoutes'
 import { getSession } from './features/auth/auth.slice'
 import Layout from './components/Layout'
+import ErrorBoundary from './components/ErrorBoundary'
 
 const App: React.FC = () => {
   const checkAuthentication = useSelector((store: RootState) => store.auth.checkAuthentication)
@@ -27,30 +28,32 @@ const App: React.FC = () => {
   }
 
   return (
-    <React.Suspense fallback={<div>Loading..</div>}>
-      <Layout>
-        <ThemeProvider theme={appTheme}>
-          <Routes>
-            <Route
-              path='auth/*'
-              element={
-                <AuthRoute>
-                  <AuthRoutes />
-                </AuthRoute>
-              }
-            />
-            <Route
-              path='article/*'
-              element={
-                <PrivateRoute>
-                  <ArticleRoutes />
-                </PrivateRoute>
-              }
-            />
-          </Routes>
-        </ThemeProvider>
-      </Layout>
-    </React.Suspense>
+    <ErrorBoundary>
+      <React.Suspense fallback={<div>Loading..</div>}>
+        <Layout>
+          <ThemeProvider theme={appTheme}>
+            <Routes>
+              <Route
+                path='auth/*'
+                element={
+                  <AuthRoute>
+                    <AuthRoutes />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path='article/*'
+                element={
+                  <PrivateRoute>
+                    <ArticleRoutes />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </ThemeProvider>
+        </Layout>
+      </React.Suspense>
+    </ErrorBoundary>
   )
 }
 
